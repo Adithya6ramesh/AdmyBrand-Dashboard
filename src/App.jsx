@@ -2,6 +2,7 @@ import { useState } from 'react';
 import DashboardLayout from './components/DashboardLayout';
 import OverviewPage from './components/OverviewPage';
 import CampaignsPage from './components/CampaignsPage';
+import AnalyticsPage from './components/AnalyticsPage';
 import './App.css';
 
 function App() {
@@ -12,14 +13,7 @@ function App() {
       case 'campaigns':
         return <CampaignsPage />;
       case 'analytics':
-        return (
-          <div className="space-y-6">
-            <div className="text-center py-12">
-              <h2 className="text-2xl font-bold mb-4">Analytics Dashboard</h2>
-              <p className="text-muted-foreground">Advanced analytics features coming soon...</p>
-            </div>
-          </div>
-        );
+        return <AnalyticsPage />;
       case 'audience':
         return (
           <div className="space-y-6">

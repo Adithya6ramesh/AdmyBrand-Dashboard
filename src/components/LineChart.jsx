@@ -15,10 +15,13 @@ const LineChart = ({
   xKey, 
   yKey, 
   color = '#8884d8',
-  className = '' 
+  className = '',
+  showSecondLine = false,
+  secondYKey = '',
+  secondColor = '#82ca9d'
 }) => {
   const formatTooltipValue = (value, name) => {
-    if (name === 'revenue') {
+    if (name === 'revenue' || name === 'spend') {
       return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -40,7 +43,7 @@ const LineChart = ({
   };
 
   const formatYAxisLabel = (value) => {
-    if (yKey === 'revenue') {
+    if (yKey === 'revenue' || yKey === 'spend' || secondYKey === 'spend') {
       return `$${(value / 1000).toFixed(0)}k`;
     }
     return value;
@@ -82,6 +85,16 @@ const LineChart = ({
               dot={{ fill: color, strokeWidth: 2, r: 4 }}
               activeDot={{ r: 6, stroke: color, strokeWidth: 2 }}
             />
+            {showSecondLine && secondYKey && (
+              <Line 
+                type="monotone" 
+                dataKey={secondYKey} 
+                stroke={secondColor} 
+                strokeWidth={3}
+                dot={{ fill: secondColor, strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, stroke: secondColor, strokeWidth: 2 }}
+              />
+            )}
           </RechartsLineChart>
         </ResponsiveContainer>
       </CardContent>
