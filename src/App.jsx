@@ -3,6 +3,7 @@ import DashboardLayout from './components/DashboardLayout';
 import OverviewPage from './components/OverviewPage';
 import CampaignsPage from './components/CampaignsPage';
 import AnalyticsPage from './components/AnalyticsPage';
+import ReportsPage from './components/ReportsPage';
 import './App.css';
 
 function App() {
@@ -24,14 +25,7 @@ function App() {
           </div>
         );
       case 'reports':
-        return (
-          <div className="space-y-6">
-            <div className="text-center py-12">
-              <h2 className="text-2xl font-bold mb-4">Reports</h2>
-              <p className="text-muted-foreground">Custom reporting features coming soon...</p>
-            </div>
-          </div>
-        );
+        return <ReportsPage />;
       case 'data':
         return (
           <div className="space-y-6">
