@@ -157,10 +157,7 @@ const AnalyticsPage = () => {
               <SelectItem value="linkedin">LinkedIn</SelectItem>
             </SelectContent>
           </Select>
-          <DateRangeFilter 
-            selectedRange={selectedDateRange}
-            onRangeChange={(range) => setSelectedDateRange(range)}
-          />
+          <DateRangeFilter />
           <ExportButton 
             data={monthlyPerformance}
             filename="advanced-analytics"

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -15,52 +15,40 @@ import {
 } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useDateFilter } from '../contexts/DateFilterContext';
 
 const DateRangeFilter = ({ 
-  selectedRange, 
-  onRangeChange, 
   className = '' 
 }) => {
-  const [customStart, setCustomStart] = useState('');
-  const [customEnd, setCustomEnd] = useState('');
+  const { 
+    selectedRange, 
+    customDates, 
+    dateRangeOptions, 
+    handleRangeChange, 
+    getDisplayLabel 
+  } = useDateFilter();
+  
+  const [customStart, setCustomStart] = useState(customDates.start);
+  const [customEnd, setCustomEnd] = useState(customDates.end);
   const [isCustomOpen, setIsCustomOpen] = useState(false);
-
-  const dateRangeOptions = [
-    { label: 'Last 7 days', value: '7d' },
-    { label: 'Last 30 days', value: '30d' },
-    { label: 'Last 90 days', value: '90d' },
-    { label: 'This Month', value: 'month' },
-    { label: 'This Quarter', value: 'quarter' },
-    { label: 'Custom Range', value: 'custom' }
-  ];
 
   const handleRangeSelect = (value) => {
     if (value === 'custom') {
       setIsCustomOpen(true);
     } else {
-      onRangeChange(value);
+      handleRangeChange(value);
     }
   };
 
   const handleCustomApply = () => {
     if (customStart && customEnd) {
-      onRangeChange('custom', { start: customStart, end: customEnd });
+      handleRangeChange('custom', { start: customStart, end: customEnd });
       setIsCustomOpen(false);
     }
   };
 
-  const getDisplayLabel = () => {
-    const option = dateRangeOptions.find(opt => opt.value === selectedRange);
-    if (selectedRange === 'custom' && customStart && customEnd) {
-      return `${new Date(customStart).toLocaleDateString()} - ${new Date(customEnd).toLocaleDateString()}`;
-    }
-    return option ? option.label : 'Select Range';
-  };
-
   return (
-    <div className={`flex items-center space-x-2 ${className}`}>
-      <Calendar className="h-4 w-4 text-muted-foreground" />
-      
+    <div className={`flex items-center ${className}`}>
       <Popover open={isCustomOpen} onOpenChange={setIsCustomOpen}>
         <PopoverTrigger asChild>
           <div>

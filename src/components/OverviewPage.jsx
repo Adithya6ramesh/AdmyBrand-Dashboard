@@ -9,15 +9,11 @@ import ExportButton from './ExportButton';
 import LiveDataToggle from './LiveDataToggle';
 import SkeletonLoader from './SkeletonLoader';
 import { useRealTimeData } from '../hooks/useRealTimeData';
-import { 
-  revenueOverTime, 
-  dailyUsers, 
-  trafficSources 
-} from '../lib/mockData';
+import { useDateFilter } from '../contexts/DateFilterContext';
+import { trafficSources } from '../lib/mockData';
 
 const OverviewPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedDateRange, setSelectedDateRange] = useState('7d');
   const { 
     metrics, 
     isLive, 
@@ -25,6 +21,13 @@ const OverviewPage = () => {
     stopLiveUpdates, 
     resetToOriginal 
   } = useRealTimeData();
+  
+  const { 
+    filteredData, 
+    getDisplayLabel, 
+    getDateRangeText,
+    getFilteredMetrics 
+  } = useDateFilter();
 
   // Simulate loading
   useEffect(() => {
@@ -34,11 +37,8 @@ const OverviewPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleDateRangeChange = (range, customDates) => {
-    setSelectedDateRange(range);
-    // In a real app, you would fetch new data based on the date range
-    console.log('Date range changed:', range, customDates);
-  };
+  // Get filtered metrics
+  const filteredMetrics = getFilteredMetrics();
 
   if (isLoading) {
     return (
@@ -76,7 +76,7 @@ const OverviewPage = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
           <p className="text-muted-foreground">
-            Track your marketing performance and key metrics
+            Track your marketing performance and key metrics • {getDateRangeText()}
           </p>
         </div>
         
@@ -87,12 +87,9 @@ const OverviewPage = () => {
             onStop={stopLiveUpdates}
             onReset={resetToOriginal}
           />
-          <DateRangeFilter 
-            selectedRange={selectedDateRange}
-            onRangeChange={handleDateRangeChange}
-          />
+          <DateRangeFilter />
           <ExportButton 
-            data={[...revenueOverTime, ...dailyUsers]}
+            data={[...filteredData.revenue, ...filteredData.users]}
             filename="dashboard-overview"
           />
         </div>
@@ -102,19 +99,19 @@ const OverviewPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard
           title="Total Revenue"
-          value={metrics.revenue.current}
+          value={filteredMetrics.totalRevenue}
           previousValue={metrics.revenue.previous}
-          change={metrics.revenue.change}
-          trend={metrics.revenue.trend}
+          change={filteredMetrics.revenueGrowth}
+          trend={filteredMetrics.revenueGrowth > 0 ? 'up' : 'down'}
           icon={DollarSign}
           format="currency"
         />
         <MetricCard
           title="Active Users"
-          value={metrics.users.current}
+          value={filteredMetrics.totalUsers}
           previousValue={metrics.users.previous}
-          change={metrics.users.change}
-          trend={metrics.users.trend}
+          change={filteredMetrics.userGrowth}
+          trend={filteredMetrics.userGrowth > 0 ? 'up' : 'down'}
           icon={Users}
           format="number"
         />
@@ -141,14 +138,14 @@ const OverviewPage = () => {
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <LineChart
-          data={revenueOverTime}
+          data={filteredData.revenue}
           title="Revenue Over Time"
           xKey="date"
           yKey="revenue"
           color="#8884d8"
         />
         <BarChart
-          data={dailyUsers}
+          data={filteredData.users}
           title="Daily Active Users"
           xKey="day"
           yKey="users"
@@ -177,7 +174,7 @@ const OverviewPage = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Active Campaigns</span>
-                <span className="font-medium">12</span>
+                <span className="font-medium">{filteredMetrics.activeCampaigns}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Avg. CTR</span>

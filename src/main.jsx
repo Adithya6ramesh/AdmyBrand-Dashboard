@@ -3,11 +3,14 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { SearchProvider } from './contexts/SearchContext'
+import { DateFilterProvider } from './contexts/DateFilterContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <SearchProvider>
-      <App />
-    </SearchProvider>
+    <DateFilterProvider>
+      <SearchProvider>
+        <App />
+      </SearchProvider>
+    </DateFilterProvider>
   </StrictMode>,
 )

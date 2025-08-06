@@ -170,10 +170,7 @@ const ReportsPage = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          <DateRangeFilter 
-            selectedRange={selectedDateRange}
-            onRangeChange={(range) => setSelectedDateRange(range)}
-          />
+          <DateRangeFilter />
           <ExportButton 
             data={campaignData}
             filename="performance-report"
