@@ -191,14 +191,6 @@ const Navbar = () => {
 
         {/* Right side actions */}
         <div className="flex items-center space-x-2">
-          {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-4 w-4" />
-            <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center">
-              3
-            </span>
-          </Button>
-
           {/* Theme Toggle */}
           <ThemeToggle />
 
