@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { 
   BarChart3, 
   Home, 
-  Users, 
   Target, 
-  Settings, 
   Menu, 
   X,
   TrendingUp,
@@ -19,10 +17,8 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     { id: 'overview', label: 'Overview', icon: Home },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
     { id: 'campaigns', label: 'Campaigns', icon: Target },
-    { id: 'audience', label: 'Audience', icon: Users },
     { id: 'reports', label: 'Reports', icon: TrendingUp },
     { id: 'data', label: 'Data Sources', icon: Database },
-    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   return (
