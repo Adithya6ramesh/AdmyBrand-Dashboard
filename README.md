@@ -5,6 +5,7 @@ A comprehensive marketing analytics dashboard built with React, providing real-t
 ## 🎯 Overview
 
 AdmyBrand Insights is a modern, responsive dashboard designed for marketing teams to monitor, analyze, and optimize their advertising campaigns across multiple platforms. The application delivers actionable insights through intuitive visualizations and comprehensive reporting capabilities.
+
 Deployed link - https://admy-brand-dashboard.vercel.app/
 DEMO-https://www.loom.com/share/75e6aefffb5f4041b46e7401f98af45b?sid=33a38130-7fb2-4f0b-a69e-7f30383d64a9
 ## ✨ Key Features
@@ -197,5 +198,6 @@ This project is proprietary software developed for AdmyBrand. All rights reserve
 - **Repository**: [GitHub](https://github.com/Adithya6ramesh/AdmyBrand-Dashboard)
 - **Documentation**: Available in `/docs` directory
 - **Support**: Contact development team for technical assistance
+
 
 
