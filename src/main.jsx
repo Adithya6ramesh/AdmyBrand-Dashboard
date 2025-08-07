@@ -9,7 +9,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <DateFilterProvider>
       <SearchProvider>
-        <App />
+    <App />
       </SearchProvider>
     </DateFilterProvider>
   </StrictMode>,

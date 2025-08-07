@@ -170,6 +170,11 @@ export const DateFilterProvider = ({ children }) => {
     return `${formatDate(startDate)} - ${formatDate(endDate)}`;
   };
 
+  // Get filtered campaigns
+  const getFilteredCampaigns = () => {
+    return filteredData.campaigns;
+  };
+
   const value = {
     selectedRange,
     customDates,
@@ -178,7 +183,8 @@ export const DateFilterProvider = ({ children }) => {
     handleRangeChange,
     getDisplayLabel,
     getDateRangeText,
-    getFilteredMetrics
+    getFilteredMetrics,
+    getFilteredCampaigns
   };
 
   return (
